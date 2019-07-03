@@ -1,0 +1,46 @@
+
+@Seed - 7 userow(3 teacher and 3 not)
+[User]
+- when is_teacher=True - teacher retrieves correct teacher profile and null for student
+- when is_teacher=False - student retrieves student profile
+- check if i can save whole in transacation(profile and user) - withour knowing id of user !?
+(password hashing should be a setter)
+
+@Question - Not Setting nullable on foreign key - does it cascade ??? is it required ??? how does it works ??? Check by deletein User
+@Seed - 4 teacher profile - 2 is_ausbildung, 1 ausbilder
+[Teacher]
+- check if foreign key constraint work - user_id, ausbilder_id
+- self reference - setting and getting by azubi/ausbilder
+- getting lectures/setting lectures and user
+- validation - if is_ausbildung=True - ausbilder_id must be set else could be null
+- validation - can set ausbilder only when is_ausbildung=True
+- validation - can set user only when user.is_teacher = True. W przeciwnym razie error msg.
+- check if for example wage is mandatory field
+- removing ausbilder should not cascade but set to null
+
+@Seed - 3 student profile
+[Student]
+- started - setting date - what format?
+- validation - can set user only when user.is_teacher = False. W przeciwnym razie error msg.
+- age validation - between 15 and 120
+- retrieve/assign lectures
+- retrieve all grades(can i do that directly on student model) "through" relationshop
+
+@Seed - 3 Lectures - without teacher
+[Lecture]
+- topic cannot be null
+- can lecture be created without teacher_id - should be possible !
+- assigning/retrieving teacher
+- getting all students/assigning student(possible?)
+
+
+[LectureStudents]
+- assigning students and lectures
+- checking if student_id and lecture_id unique constraint works
+- on_delete cascade when deleting student or lecture
+- final_grade should be nullable
+
+[Grade]
+- on delete cascade when deleting lecture_student
+- assigning studentlecture
+- can i create grade by directly giving student and lecture ? will the validation of lecture_student work?
