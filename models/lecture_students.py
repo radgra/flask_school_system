@@ -14,7 +14,7 @@ class LectureStudents(db.Model):
 
     student = db.relationship("Student", back_populates="lectures")
     lecture = db.relationship("Lecture", back_populates="students")
-    grades = db.relationship("Grades", back_populates="lecture_student")
+    grades = db.relationship("Grade", back_populates="lecture_student")
 
     # Do i need 'passive_deletes' for on_delete=Cascade ?
     # https://stackoverflow.com/questions/5033547/sqlalchemy-cascade-delete

@@ -31,18 +31,20 @@ users = [
         "password":"1234",
         "is_teacher":True
     },
-],
+]
 
 students = [
-    {
+    {   "username":"lennon",
         "age":30,
         "started":datetime.datetime(2015, 5, 17)
     },
-    {
+    {   
+        "username":"macca",
         "age":20,
         "started":datetime.datetime(2012, 3, 10)
     },
-    {
+    {   
+        "username":"ringo",
         "age":25,
         "started":datetime.datetime(2016, 10, 30)
     }
@@ -50,25 +52,29 @@ students = [
 
 teachers = [
     {
+        "username":"harrison",
         "wage":12323,
         "is_ausbildung":False,
         
     },
     {
+        "username":"jagger",
         "wage":12323,
         "is_ausbildung":False,
 
     },
     {
+        "username":"keith",
+        "ausbilder":"jagger",
         "wage":12323,
         "is_ausbildung":True,
 
     },
-    {
-        "wage":12323,
-        "is_ausbildung":True,
+    # {
+    #     "wage":12323,
+    #     "is_ausbildung":True,
 
-    }
+    # }
 ]
 
 lectures = [

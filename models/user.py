@@ -11,8 +11,12 @@ class UserModel(db.Model):
     teacher = db.relationship("Teacher", uselist=False, back_populates="user")
 
 
+    def __repr__(self):
+        return self.username
+
     def json(self):
         return {
             "id":self.id,
             "username":self.username,
         }
+    

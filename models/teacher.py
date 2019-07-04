@@ -7,8 +7,11 @@ class Teacher(db.Model):
     wage = db.Column(db.Integer)
     is_ausbildung = db.Column(db.Boolean, default=False)
     ausbilder_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True)
     
-    user = db.relationship("User", back_populates="teacher")
+    user = db.relationship("UserModel", back_populates="teacher")
     azubi = db.relationship('Teacher', backref=db.backref('ausbilder', remote_side=[id]))
     lectures = db.relationship('Lecture', back_populates="teacher")
+
+    def __repr__(self):
+        return self.user.username
