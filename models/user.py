@@ -8,7 +8,8 @@ class UserModel(db.Model):
     is_teacher = db.Column(db.Boolean, default=False)
 
     student = db.relationship("Student", uselist=False, back_populates="user")
-    teacher = db.relationship("Teacher", uselist=False, back_populates="user")
+    #teacher = db.relationship("Teacher", uselist=False, passive_deletes=True, back_populates="user")
+    #teacher = db.relationship("Teacher", uselist=False, passive_deletes=True, cascade="all, delete", back_populates="user") #That works
 
 
     def __repr__(self):
@@ -19,4 +20,8 @@ class UserModel(db.Model):
             "id":self.id,
             "username":self.username,
         }
+
+    # multifield validation
+    def validate(self):
+        pass
     
