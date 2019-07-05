@@ -3,3 +3,5 @@
 3.Mozna zrobic teacher1.user = user1 -> user_id bedzie automatycznie wypelnone podczas commit
 4.Default values are popoulated at commit time. https://stackoverflow.com/questions/13791487/how-to-apply-column-defaults-before-a-commit-in-sqlalchemy
     This means that for important stuff that need validation i need to avoid default and use nullable=False
+5.FOREIGN KEYS - by default nullable - when nullable=False - we cannot delete Object - not null constraint failed
+6 FOR SQLITE passive_deletes must be set to False !!!!!! Otherwise it wont work - it will delete user but wont change foreign key on teacher

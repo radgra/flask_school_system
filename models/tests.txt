@@ -2,15 +2,15 @@
 @Seed - 7 userow(3 teacher and 3 not)
 [User]
 - when is_teacher=True - teacher retrieves correct teacher profile and null for student
-- when is_teacher=False - student retrieves student profile
-- check if i can save whole in transacation(profile and user) - withour knowing id of user !?
-(password hashing should be a setter)
+- when is_teacher=False - student retrieves student profile - OK Marshmellow or Own model validation
+- check if i can save whole in transacation(profile and user) - withour knowing id of user !? - OK works
+(password hashing should be a setter) 
 
-@Question - Not Setting nullable on foreign key - does it cascade ??? is it required ??? how does it works ??? Check by deletein User
+@Question - Not Setting nullable on foreign key - does it cascade ??? is it required ??? how does it works ??? Check by deletein User - TESTED
 @Seed - 4 teacher profile - 2 is_ausbildung, 1 ausbilder
 [Teacher]
-- check if foreign key constraint work - user_id, ausbilder_id
-- self reference - setting and getting by azubi/ausbilder
+- check if foreign key constraint work - user_id, ausbilder_id - WORKS
+- self reference - setting and getting by azubi/ausbilder - TO CHECK
 - getting lectures/setting lectures and user
 - validation - if is_ausbildung=True - ausbilder_id must be set else could be null
 - validation - can set ausbilder only when is_ausbildung=True
