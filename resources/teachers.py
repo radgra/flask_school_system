@@ -19,12 +19,11 @@ class TeacherList(Resource):
         # TODO handle unique user_id
         teacher_schema = TeacherSchema()
         data = request.get_json()
-        try:
-            new_teacher = teacher_schema.load(data)
-            db.session.add(new_teacher)
-            db.session.commit()
-        except ValidationError as err:
-            return err.messages, 400
+        
+        new_teacher = teacher_schema.load(data)
+        db.session.add(new_teacher)
+        db.session.commit()
+
 
 
         return {"data":teacher_schema.dump(new_teacher)}
@@ -46,11 +45,9 @@ class TeacherDetail(Resource):
         teacher = Teacher.query.get(id)
         if teacher is None:
             return {"messge":"Teacher not found"}
-        try:
-            updated_teacher = teacher_schema.load(data, instance=teacher)
-        except ValidationError as err:
-            return err.messages, 400
         
+        updated_teacher = teacher_schema.load(data, instance=teacher)
+
         return {"data":teacher_schema.dump(updated_teacher)}
 
 
@@ -64,18 +61,17 @@ class AssignAzubis(Resource):
         if teacher is None:
             return {"messge":"Teacher not found"}
 
-        try:
-            azubis_ids = teacher_schema.load(data)
-            # przenislem to do marshmallow
-            if id in azubis_ids['azubis']:
-                return {"error":"You cannot assign ausbilder to themselves"}
+        
+        azubis_ids = teacher_schema.load(data)
+        # przenislem to do marshmallow
+        #if id in azubis_ids['azubis']:
+        #    return {"error":"You cannot assign ausbilder to themselves"}
 
-            azubis = Teacher.query.filter(Teacher.id.in_(azubis_ids['azubis'])).all()
-            teacher.azubis = azubis
-            db.session.commit()
+        azubis = Teacher.query.filter(Teacher.id.in_(azubis_ids['azubis'])).all()
+        teacher.azubis = azubis
+        db.session.commit()
 
-        except ValidationError as err:
-            return err.messages, 400
+   
         
         return {"data":full_schema.dump(teacher)}
 

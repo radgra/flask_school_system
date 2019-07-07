@@ -1,7 +1,9 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_restful import Api
 from resources.users import UserList
 from resources.teachers import TeacherList, TeacherDetail, AssignAzubis
+from marshmallow import ValidationError
+from sqlalchemy import exc
 from ma import ma
 
 app = Flask(__name__)
@@ -20,6 +22,22 @@ ma.init_app(app)
 @app.before_first_request
 def create_tables():
     db.create_all()
+
+# like a except blof
+@app.errorhandler(ValidationError)
+def handle_marshmallow_validation(error):
+    print("ole")
+    return jsonify(error.messages), 400
+
+@app.errorhandler(Exception)
+def handle_error(e):
+    return jsonify({"message": "Something went wrong"}), 500
+
+@app.errorhandler(exc.IntegrityError)
+def handle_error(e):
+    return jsonify({"message": e.args[0]}), 500
+
+
 
 api.add_resource(UserList, '/users')
 api.add_resource(TeacherList, '/teachers')
