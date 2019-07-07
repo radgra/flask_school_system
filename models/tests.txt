@@ -10,7 +10,7 @@
 @Seed - 4 teacher profile - 2 is_ausbildung, 1 ausbilder
 [Teacher]
 - check if foreign key constraint work - user_id, ausbilder_id - WORKS
-- self reference - setting and getting by azubi/ausbilder - TO CHECK
+- self reference - setting and getting by azubi/ausbilder -  WORKS
 - getting lectures/setting lectures and user
 - validation - if is_ausbildung=True - ausbilder_id must be set else could be null
 - validation - can set ausbilder only when is_ausbildung=True

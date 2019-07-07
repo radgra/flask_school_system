@@ -1,0 +1,5 @@
+Flask-RESTful
+flask-jwt-extended
+marshmallow --pre
+flask-marshmallow
+marshmallow-sqlalchemy

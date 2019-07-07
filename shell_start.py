@@ -17,34 +17,36 @@ def run_shell():
     db.create_all()
 
 
-def seed_users():
-    with app.app_context():
-        db.create_all()
+def seed_users(_db):
+        _db.create_all()
         for user in users:
             new_user = UserModel(**user)
             db.session.add(new_user)
             db.session.commit()
 
-def seed_students():
-    with app.app_context():
-        for student in students:
-            user = UserModel.query.filter_by(username=student.pop('username')).first()
-            print(student)
+def seed_students(db):
+        _students = list(students)
+        print(_students)
+        for stud in _students:
+            student  = stud.copy()
+            user = UserModel.query.filter_by(username=student.get('username')).first()
+
             if user:
+                student.pop('username')
                 new_student = Student(**student, user_id=user.id)
                 db.session.add(new_student)
                 db.session.commit()
 
 
-def seed_teachers():
-    with app.app_context():
-        for teacher in teachers:
+def seed_teachers(db):
+        for teach in teachers:
+            teacher = teach.copy()
             user = UserModel.query.filter_by(username=teacher.pop('username')).first()
 
             if teacher['is_ausbildung'] == True:
-                ausbilder = UserModel.query.filter_by(username=teacher.pop('ausbilder')).first()
+                ausbilder = Teacher.query.filter(Teacher.user.has(username=teacher['ausbilder'])).first()
                 if ausbilder:
-                    teacher['ausbilder_id'] = ausbilder.id
+                    teacher['ausbilder'] = ausbilder
             
             if user:
                 new_teacher = Teacher(**teacher, user_id=user.id)
@@ -52,10 +54,10 @@ def seed_teachers():
                 db.session.commit()
 
 
-def seed_all():
-    seed_users()
-    seed_students()
-    seed_teachers()
+def seed_all(_db=db):
+    seed_users(_db)
+    seed_students(_db)
+    seed_teachers(_db)
 
 
 

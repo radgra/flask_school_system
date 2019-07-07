@@ -29,7 +29,7 @@ users = [
     {
         "username":"keith",
         "password":"1234",
-        "is_teacher":True
+        "is_teacher":True,
     },
 ]
 
