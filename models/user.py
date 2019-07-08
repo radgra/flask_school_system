@@ -7,7 +7,7 @@ class UserModel(db.Model):
     password = db.Column(db.String(80), nullable=False)
     is_teacher = db.Column(db.Boolean, default=False)
 
-    student = db.relationship("Student", uselist=False, back_populates="user")
+    #student = db.relationship("Student", uselist=False, back_populates="user")
     #teacher = db.relationship("Teacher", uselist=False, passive_deletes=True, back_populates="user")
     #teacher = db.relationship("Teacher", uselist=False, passive_deletes=True, cascade="all, delete", back_populates="user") #That works
 

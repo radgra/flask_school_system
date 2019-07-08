@@ -42,7 +42,8 @@ class Teacher(db.Model):
         # print(key)
         #print(address)
         #assert '@' in address.email
-        assert self.id == address
+        if self.id:
+            assert self.id == address
         return address
 
 
