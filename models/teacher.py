@@ -12,7 +12,7 @@ class Teacher(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), unique=True, nullable=False)
     # FOR SQLITE passive_deletes must be set to False !!!!!! Otherwise it wont work - it will delete user but wont change foreign key on teacher
     user = db.relationship("UserModel", backref=backref('teacher', passive_deletes=False, uselist=False, cascade="all, delete-orphan")) 
-    azubi = db.relationship('Teacher', backref=db.backref('ausbilder', remote_side=[id]))
+    azubis = db.relationship('Teacher', backref=backref('ausbilder', remote_side=[id]))
     lectures = db.relationship('Lecture', back_populates="teacher")
 
     def __repr__(self):
@@ -28,11 +28,21 @@ class Teacher(db.Model):
         return True
 
 
+
+
     # Property sqlalchemy validation - ONLY FOR DEMO
     @validates('wage')
     def validate_user(self, key, address):
-        print(key)
-        print(address)
+        # print(key)
+        #print(address)
+        return address
+    
+    @validates('ausbilder_id')
+    def validate_aubilder(self, key, address):
+        # print(key)
+        #print(address)
+        #assert '@' in address.email
+        assert self.id == address
         return address
 
 
@@ -42,6 +52,6 @@ class Teacher(db.Model):
 # Validation for setting user attribute - ONLY FOR DEMO
 @event.listens_for(Teacher.user, 'set', retval=True)
 def validate_obj(target, value, oldvalue, initiator):
-    print('event fired for validate_obj')
-    print(value)
+    #print('event fired for validate_obj')
+    #print(value)
     return value

@@ -5,3 +5,4 @@
     This means that for important stuff that need validation i need to avoid default and use nullable=False
 5.FOREIGN KEYS - by default nullable - when nullable=False - we cannot delete Object - not null constraint failed
 6 FOR SQLITE passive_deletes must be set to False !!!!!! Otherwise it wont work - it will delete user but wont change foreign key on teacher
+7 I think that for relations to work i have to assign them per relations not per relation_id
