@@ -4,6 +4,7 @@ from resources.users import UserList
 from resources.teachers import TeacherList, TeacherDetail, AssignAzubis
 from resources.students import StudentList, StudentDetail
 from resources.lectures import LectureList, LectureDetail
+from resources.lecture_students import LectureStudentsResource
 from marshmallow import ValidationError
 from sqlalchemy import exc
 from ma import ma
@@ -44,10 +45,12 @@ def handle_error(e):
 
 # users
 api.add_resource(UserList, '/users')
+
 # teachers
 api.add_resource(TeacherList, '/teachers')
 api.add_resource(TeacherDetail, '/teachers/<int:id>')
 api.add_resource(AssignAzubis, '/teachers/<int:id>/assign_azubis')
+
 # students
 api.add_resource(StudentList, '/students')
 api.add_resource(StudentDetail, '/students/<int:id>')
@@ -55,6 +58,9 @@ api.add_resource(StudentDetail, '/students/<int:id>')
 # lectures
 api.add_resource(LectureList, '/lectures')
 api.add_resource(LectureDetail, '/lectures/<int:id>')
+
+# lecture_students
+api.add_resource(LectureStudentsResource, '/lecturestudents')
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

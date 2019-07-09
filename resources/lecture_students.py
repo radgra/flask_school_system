@@ -7,8 +7,9 @@ from db import db
 
 
 class LectureStudentsResource(Resource):
-    lecture_students_schema = LectureStudentsSchema()
+    # This works too !!!!!! Cool !!!!
+    lecture_students_schema = LectureStudentsSchema(exclude=('student.user.id',))
     def get(self):
         lecture_students = LectureStudents.query.all()
 
-        return {"data":lecture_students_schema.dump(lecture_students)}
+        return {"data":self.lecture_students_schema.dump(lecture_students, many=True)}

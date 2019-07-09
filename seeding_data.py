@@ -91,3 +91,34 @@ lectures = [
         "topic":"Politics"
     },
 ]
+
+
+lecture_students = [
+    {
+        "lecture_id":1,
+        "student_id":1,
+        "final_grade":2
+    },
+    {
+        "lecture_id":1,
+        "student_id":2,
+        "final_grade":1
+    },
+    {
+        "lecture_id":1,
+        "student_id":3,
+        "final_grade":3
+    },
+    {
+        "lecture_id":2,
+        "student_id":2
+    },
+    {
+        "lecture_id":2,
+        "student_id":3
+    },
+    {
+        "lecture_id":3,
+        "student_id":1
+    },
+]
