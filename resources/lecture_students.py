@@ -13,3 +13,14 @@ class LectureStudentsResource(Resource):
         lecture_students = LectureStudents.query.all()
 
         return {"data":self.lecture_students_schema.dump(lecture_students, many=True)}
+
+
+    def post(self):
+        lecture_students_update_schema = LectureStudentsSchema(only=("lecture_id","student_id","final_grade"))
+        data = request.get_json()
+
+        new_lecture_student = lecture_students_update_schema.load(data)
+        db.session.add(new_lecture_student)
+        db.session.commit()
+
+        return {"data":self.lecture_students_schema.dump(new_lecture_student)}

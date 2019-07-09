@@ -13,5 +13,12 @@ class LectureStudentsSchema(ma.ModelSchema):
         model = LectureStudents
         include_fk = True
 
+    @validates_schema
+    def validate_unique(self,data,**kwargs):
+        student_id = data.get('student_id')
+        lecture_id = data.get('lecture_id')
+        lk_exist = LectureStudents.query.filter_by(student_id=student_id, lecture_id=lecture_id).first()
+        if lk_exist:
+            raise ValidationError("Fields lecture_id and student_id should be unique together")
 
-
+        return True
