@@ -6,7 +6,7 @@ from models.lecture import Lecture
 from models.grade import Grade
 from db import db 
 from app import app
-from seeding_data import users, students, teachers
+from seeding_data import users, students, teachers, lectures
 
 db.init_app(app)
 
@@ -54,10 +54,18 @@ def seed_teachers(db):
                 db.session.commit()
 
 
+def seed_lectures():
+    for lecture in lectures:
+        new_lecture = Lecture(**lecture)
+        db.session.add(new_lecture)
+        db.session.commit()
+
+
 def seed_all(_db=db):
     seed_users(_db)
     seed_students(_db)
     seed_teachers(_db)
+    seed_lectures()
 
 
 

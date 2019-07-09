@@ -79,12 +79,15 @@ teachers = [
 
 lectures = [
     {
+        "teacher_id":1,
         "topic":"Math"
     },
     {
+        "teacher_id":2,
         "topic":"English"
     },
     {
+        "teacher_id":3,
         "topic":"Politics"
     },
 ]

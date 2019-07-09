@@ -18,3 +18,11 @@ class LectureStudents(db.Model):
 
     # Do i need 'passive_deletes' for on_delete=Cascade ?
     # https://stackoverflow.com/questions/5033547/sqlalchemy-cascade-delete
+
+# lecture student - have to be unique together ! - po zbudowaniu endpointa
+
+
+# Potrzebuje nastepujace endpointy:
+# 1 Bulk partial update - only student_id - if exist dont delete it cause of final_grade <---- zeby sprawdzic czy to bedzie dzialalo narazie musze zbudwac endpoint ktory pozwoli dawanie gradow
+# 2 Assigning single student to lecture - could be done on student endpoint or separate endpoint - must have update/delete/patch capabilities FOR EXERICSE DO BOTH
+# 3 Test deleteing student and lecture - If on delete cascade works !!!
