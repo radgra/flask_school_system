@@ -36,4 +36,5 @@ class AssignStudentsSchema(Schema):
 # PROBLEM - circular imports
 # TODO NEXT TIME:
 # 1. Better display for related model not students/letctures but lecture_students - so i can check if my bulk assigning works or not !!!!
-#
+# 2. Potem moge grades endpoint wstawic.
+# 3. Potem JSON token
