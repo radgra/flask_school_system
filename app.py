@@ -3,8 +3,8 @@ from flask_restful import Api
 from resources.users import UserList
 from resources.teachers import TeacherList, TeacherDetail, AssignAzubis
 from resources.students import StudentList, StudentDetail
-from resources.lectures import LectureList, LectureDetail
-from resources.lecture_students import LectureStudentsResource
+from resources.lectures import LectureList, LectureDetail, AssignStudents
+from resources.lecture_students import LectureStudentsList, LectureStudentsDetail
 from marshmallow import ValidationError
 from sqlalchemy import exc
 from ma import ma
@@ -58,9 +58,11 @@ api.add_resource(StudentDetail, '/students/<int:id>')
 # lectures
 api.add_resource(LectureList, '/lectures')
 api.add_resource(LectureDetail, '/lectures/<int:id>')
+api.add_resource(AssignStudents, '/lectures/<int:id>/students')
 
 # lecture_students
-api.add_resource(LectureStudentsResource, '/lecturestudents')
+api.add_resource(LectureStudentsList, '/lecturestudents')
+api.add_resource(LectureStudentsDetail, '/lecturestudents/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

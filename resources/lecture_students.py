@@ -6,7 +6,7 @@ from flask import request
 from db import db
 
 
-class LectureStudentsResource(Resource):
+class LectureStudentsList(Resource):
     # This works too !!!!!! Cool !!!!
     lecture_students_schema = LectureStudentsSchema(exclude=('student.user.id',))
     def get(self):
@@ -24,3 +24,41 @@ class LectureStudentsResource(Resource):
         db.session.commit()
 
         return {"data":self.lecture_students_schema.dump(new_lecture_student)}
+
+
+class LectureStudentsDetail(Resource):
+    lecture_students_schema = LectureStudentsSchema(exclude=('student.user.id',))
+    
+    def get(self,id):
+        lecture_student = LectureStudents.query.get(id)
+        if lecture_student is None:
+            return {"message":"There is no resource with such id"}
+
+        return {"data":self.lecture_students_schema.dump(lecture_student)}
+
+    def patch(self,id):
+        lecture_student = LectureStudents.query.get(id)
+        if lecture_student is None:
+            return {"message":"There is no resource with such id"}
+
+        lecture_student_update_schema = LectureStudentsSchema(only=('student_id','lecture_id','final_grade'))
+        data = request.get_json()
+        updated_lecture = lecture_student_update_schema.load(data, instance=lecture_student, partial=True)
+
+        db.session.commit()
+
+        return {"data":self.lecture_students_schema.dump(updated_lecture)}
+
+
+    def delete(self,id):
+        lecture_student = LectureStudents.query.get(id)
+        if lecture_student is None:
+            return {"message":"There is no resource with such id"}
+
+        db.session.delete(lecture_student)
+        db.session.commit()
+
+        return {"message":"Resource deleted."}
+
+
+    

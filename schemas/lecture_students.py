@@ -9,6 +9,8 @@ class LectureStudentsSchema(ma.ModelSchema):
     student = fields.Nested(StudentSchema, exclude=('user_id','lectures'))
     # Mozna nested excludes !
     lecture = fields.Nested(LectureSchema, exclude=('students','teacher.user_id'))
+    # DZIALA !!!!!!!!
+    username = fields.String(attribute="student.user.username", dump_only=True)
     class Meta:
         model = LectureStudents
         include_fk = True

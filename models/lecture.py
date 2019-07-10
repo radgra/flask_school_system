@@ -9,6 +9,6 @@ class Lecture(db.Model):
     teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'), nullable=True)
 
     teacher = db.relationship('Teacher', back_populates="lectures")
-    students = db.relationship('LectureStudents', back_populates="lecture")
+    #students = db.relationship('LectureStudents', back_populates="lecture")
 
 

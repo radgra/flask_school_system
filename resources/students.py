@@ -71,3 +71,6 @@ class StudentDetail(Resource):
 # TODOS - Think later about assigning after i bulid lecture and grade endpoints
 # 1. Assigning lectures - later after lectures endpoint 
 
+
+
+

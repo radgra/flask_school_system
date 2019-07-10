@@ -25,3 +25,8 @@ class LectureSchema(ma.ModelSchema):
             raise ValidationError("Such topic already exists")
 
         return True
+
+
+class AssignStudentsSchema(Schema):
+    students = fields.List(fields.Integer, required=True)
+

@@ -1,5 +1,5 @@
 from db import db
-
+from sqlalchemy.orm import validates, backref
 
 class LectureStudents(db.Model):
     __tablename__ = 'lecture_students'
@@ -13,8 +13,8 @@ class LectureStudents(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey('students.id', ondelete='CASCADE'), nullable=False)
     final_grade = db.Column(db.Integer, nullable=True)
 
-    student = db.relationship("Student", back_populates="lectures")
-    lecture = db.relationship("Lecture", back_populates="students")
+    student = db.relationship("Student",backref=backref('lectures', passive_deletes=False, cascade="all, delete-orphan"))
+    lecture = db.relationship("Lecture",backref=backref('students', passive_deletes=False, cascade="all, delete-orphan"))
     grades = db.relationship("Grade", back_populates="lecture_student")
 
     # Do i need 'passive_deletes' for on_delete=Cascade ?
@@ -33,3 +33,11 @@ class LectureStudents(db.Model):
 # 1. Test ondelete cascade - student and lecture
 # 2. Finish endpoint - detail/patch/delete
 # 3. Try Bulk Update - if it works
+
+
+# Maly Problem :
+# Przy M2M lecture_students - both lecture->students i students->lecture wskazuje id tabeli posredniej a nie bezposrednio do wlasciwego resource. Rozwiazania:
+# 1. zmienic na lecture_students
+# 2. dodac dodatkowa propoerty na schema students/lecture i zmappowac id
+# 3. bezposrednio zmappowac na modelu relacje - ale i tak chce miec final_grade
+# 4. czy mouna nested fields jako main fields
