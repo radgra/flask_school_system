@@ -3,8 +3,10 @@ from models.lecture import Lecture
 from marshmallow import fields, validates, ValidationError,  validates_schema, Schema
 from schemas.teacher import TeacherSchema
 
+
 class LectureSchema(ma.ModelSchema):
     teacher = fields.Nested(TeacherSchema, exclude=('lectures','azubis','ausbilder'))
+    
     class Meta:
         model = Lecture
         include_fk = True
@@ -30,3 +32,8 @@ class LectureSchema(ma.ModelSchema):
 class AssignStudentsSchema(Schema):
     students = fields.List(fields.Integer, required=True)
 
+
+# PROBLEM - circular imports
+# TODO NEXT TIME:
+# 1. Better display for related model not students/letctures but lecture_students - so i can check if my bulk assigning works or not !!!!
+#
