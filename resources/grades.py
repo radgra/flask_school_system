@@ -74,3 +74,17 @@ class GradeDetail(Resource):
         db.session.commit()
 
         return {"message":"Grade deleted"}
+
+
+# Na jutro
+# Endpoint lecture/id/students/id/grades - bulk assigning - problem with date - should i allow that ? - in real app i wouldnt do that !
+# TODO importannt:
+# testing - postman or flask - after my api is ready i should know whether it works and consider all features..... think about testing
+# JWT_extended without refresh token in this app - next time i will use refresh token
+
+# Permissions:
+#   - only teacher who is assigned to lecture should be able to change/add grades
+#   - only admin should be able to add teachers to lecture
+#   - only certain student should be able to view his/hers own grades
+
+# Na jutro - JWT_extended and permissions
