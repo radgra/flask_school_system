@@ -2,11 +2,17 @@ from ma import ma
 from models.lecture import Lecture
 from marshmallow import fields, validates, ValidationError,  validates_schema, Schema
 from schemas.teacher import TeacherSchema
+from models.lecture_students import LectureStudents
+
+class _LectureStudentsSchema(ma.ModelSchema):
+    class Meta:
+        model = LectureStudents
+        include_fk = True
 
 
 class LectureSchema(ma.ModelSchema):
     teacher = fields.Nested(TeacherSchema, exclude=('lectures','azubis','ausbilder'))
-    
+    lecture_students = fields.Nested(_LectureStudentsSchema, many=True)
     class Meta:
         model = Lecture
         include_fk = True

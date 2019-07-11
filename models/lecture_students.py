@@ -13,8 +13,8 @@ class LectureStudents(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey('students.id', ondelete='CASCADE'), nullable=False)
     final_grade = db.Column(db.Integer, nullable=True)
 
-    student = db.relationship("Student",backref=backref('lectures', passive_deletes=False, cascade="all, delete-orphan"))
-    lecture = db.relationship("Lecture",backref=backref('students', passive_deletes=False, cascade="all, delete-orphan"))
+    student = db.relationship("Student",backref=backref('lecture_students', passive_deletes=False, cascade="all, delete-orphan"))
+    lecture = db.relationship("Lecture",backref=backref('lecture_students', passive_deletes=False, cascade="all, delete-orphan"))
     grades = db.relationship("Grade", back_populates="lecture_student")
 
     # Do i need 'passive_deletes' for on_delete=Cascade ?

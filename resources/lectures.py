@@ -19,7 +19,7 @@ class LectureList(Resource):
         return {"data":data}
 
     def post(self):
-        lecture_update_schema = LectureSchema(exclude=('id','teacher','students'))
+        lecture_update_schema = LectureSchema(exclude=('id','teacher','lecture_students'))
         data = request.get_json()
 
         new_lecture = lecture_update_schema.load(data)
@@ -46,7 +46,7 @@ class LectureDetail(Resource):
         if lecture is None:
             return {"message":"Lecture with such id doesnt exist."}
         
-        lecture_update_schema = LectureSchema(exclude=('id','teacher','students'), partial=True)
+        lecture_update_schema = LectureSchema(exclude=('id','teacher','lecture_students'), partial=True)
         data = request.get_json()
         updated_lecture = lecture_update_schema.load(data, instance=lecture)
         
@@ -81,12 +81,12 @@ class AssignStudents(Resource):
         # to mozna preloading lectures
         students = Student.query.filter(Student.id.in_(student_ids["students"])).all()
         for student in students:
-            lectures = [lect for lect in student.lectures if lect.lecture_id == lecture.id]
+            lectures = [lect for lect in student.lecture_students if lect.lecture_id == lecture.id]
             # Bulk create student_id/lecture_id ??
             if not lectures:
                 lecture_student = LectureStudents()
                 lecture_student.lecture = lecture
-                student.lectures.append(lecture_student)
+                student.lecture_students.append(lecture_student)
 
             # przeszukac student.lectures czy maja juz 
         
