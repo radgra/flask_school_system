@@ -122,3 +122,24 @@ lecture_students = [
         "student_id":1
     },
 ]
+
+
+
+grades = [
+    {
+        "lecture_student_id":1,
+        "grade":1
+    },
+    {
+        "lecture_student_id":1,
+        "grade":3
+    },
+    {
+        "lecture_student_id":2,
+        "grade":5
+    },
+    {
+        "lecture_student_id":2,
+        "grade":2
+    }
+]

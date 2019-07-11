@@ -8,7 +8,7 @@ from db import db
 
 class LectureStudentsList(Resource):
     # This works too !!!!!! Cool !!!!
-    lecture_students_schema = LectureStudentsSchema(exclude=('student.user.id',))
+    lecture_students_schema = LectureStudentsSchema()
     def get(self):
         lecture_students = LectureStudents.query.all()
 
@@ -27,7 +27,7 @@ class LectureStudentsList(Resource):
 
 
 class LectureStudentsDetail(Resource):
-    lecture_students_schema = LectureStudentsSchema(exclude=('student.user.id',))
+    lecture_students_schema = LectureStudentsSchema()
     
     def get(self,id):
         lecture_student = LectureStudents.query.get(id)

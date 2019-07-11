@@ -5,6 +5,7 @@ from resources.teachers import TeacherList, TeacherDetail, AssignAzubis
 from resources.students import StudentList, StudentDetail
 from resources.lectures import LectureList, LectureDetail, AssignStudents
 from resources.lecture_students import LectureStudentsList, LectureStudentsDetail
+from resources.grades import GradeList, GradeDetail
 from marshmallow import ValidationError
 from sqlalchemy import exc
 from ma import ma
@@ -63,6 +64,10 @@ api.add_resource(AssignStudents, '/lectures/<int:id>/students')
 # lecture_students
 api.add_resource(LectureStudentsList, '/lecturestudents')
 api.add_resource(LectureStudentsDetail, '/lecturestudents/<int:id>')
+
+# grades
+api.add_resource(GradeList,'/grades')
+api.add_resource(GradeDetail,'/grades/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

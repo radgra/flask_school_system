@@ -11,7 +11,7 @@ class StudentSchema(ma.ModelSchema):
     class Meta:
         model = Student
         include_fk = True
-        dump_only = ('id', 'user', 'lectures')
+        dump_only = ('id', 'user', 'lecture_students')
         ordered = True
         
 

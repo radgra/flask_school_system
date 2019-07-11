@@ -6,9 +6,9 @@ from schemas.student import StudentSchema
 from schemas.lecture import LectureSchema
 
 class LectureStudentsSchema(ma.ModelSchema):
-    student = fields.Nested(StudentSchema, exclude=('user_id','lectures'))
+    student = fields.Nested(StudentSchema, exclude=('user_id','lecture_students'))
     # Mozna nested excludes !
-    lecture = fields.Nested(LectureSchema, exclude=('students','teacher.user_id'))
+    lecture = fields.Nested(LectureSchema, exclude=('lecture_students','teacher.user_id'))
     # DZIALA !!!!!!!!
     username = fields.String(attribute="student.user.username", dump_only=True)
     class Meta:
