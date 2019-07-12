@@ -29,3 +29,9 @@ class StudentSchema(ma.ModelSchema):
 
         return True
 
+
+# moge zrobic generalna schema dla create
+# bedzie zawierac user data i student data aby zwerifikowac ze prawidlowe dane zostaly prekzazane
+# potem przekaze je do studentschema i userschema i stworzy oba modele
+# po przeprowadzeniu transkacji zwracam userschemamodel - z nested user info
+

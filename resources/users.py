@@ -5,6 +5,7 @@ from schemas.user import UserSchema
 from marshmallow import ValidationError 
 from db import db
 from sqlalchemy import exc
+from flask_jwt_extended import create_access_token, create_refresh_token
 
 class UserList(Resource):
     user_schema = UserSchema()
@@ -34,3 +35,25 @@ class UserList(Resource):
 
 
         return data_parsed
+
+
+class UserLogin(Resource):
+    user_schema = UserSchema(only=("password","username"))
+    
+    def post(self):
+        data = request.get_json()
+        user_data = self.user_schema.load(data)
+
+        user = UserModel.query.filter_by(username=user_data["username"]).first()
+
+        # tu tzeba hashowac password
+        if user and user_data['password'] == user.password:
+            access_token = create_access_token(identity=user.id, fresh=True)
+            refresh_token = create_refresh_token(user.id)
+
+            return {
+                "access_token":access_token,
+                "refresh_token":refresh_token
+            }
+        
+        return {"message": "Invalid credentials"}

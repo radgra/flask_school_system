@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
+from flask_jwt_extended import JWTManager
 from flask_restful import Api
-from resources.users import UserList
+from resources.users import UserList, UserLogin
 from resources.teachers import TeacherList, TeacherDetail, AssignAzubis
 from resources.students import StudentList, StudentDetail
 from resources.lectures import LectureList, LectureDetail, AssignStudents
@@ -9,6 +10,7 @@ from resources.grades import GradeList, GradeDetail
 from marshmallow import ValidationError
 from sqlalchemy import exc
 from ma import ma
+from utils.permissions import PermissionAccessException
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
@@ -16,12 +18,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.config['JSON_SORT_KEYS'] = False
 
-app.secret_key = 'sdkjlsajdkslaj'
+app.secret_key = 'sdkjlsajdkslaj' #app.config['JWT_SECRET_KEY']
 api = Api(app)
 
 from db import db
 db.init_app(app)
 ma.init_app(app)
+jwt = JWTManager(app)
 
 
 @app.before_first_request
@@ -34,18 +37,25 @@ def handle_marshmallow_validation(error):
     print("ole")
     return jsonify(error.messages), 400
 
+
+
 @app.errorhandler(Exception)
 def handle_error(e):
     print(e)
     return jsonify({"message": "Something went wrong"}), 500
 
+@app.errorhandler(PermissionAccessException)
+def handle_permission_error(e):
+    return jsonify({"message":"You have no permission to do that"})
+
 @app.errorhandler(exc.IntegrityError)
-def handle_error(e):
+def handle_integrity_error(e):
     return jsonify({"message": e.args[0]}), 500
 
 
 # users
 api.add_resource(UserList, '/users')
+api.add_resource(UserLogin, '/login')
 
 # teachers
 api.add_resource(TeacherList, '/teachers')

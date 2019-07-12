@@ -9,6 +9,11 @@ from models.student import Student
 from models.lecture_students import LectureStudents
 from flask import request
 from db import db
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from models.user import UserModel
+from utils.permissions import check_object_permission
+
+
 
 
 class GradeList(Resource):
@@ -21,15 +26,27 @@ class GradeList(Resource):
 
         return {"data":data}
 
+    @jwt_required
     def post(self):
         data = request.get_json()
         
+        # moge to tez w funkcji zamknac np checkPermission i raise custom error ktory zlapie na poziomie app
+        
+
+
         grade_create_schema = GradeCreateSchema()
         grade = grade_create_schema.load(data)
 
         lecture_student = LectureStudents.query.filter_by(lecture_id=grade["lecture_id"],student_id=grade["student_id"]).first()
         if lecture_student is None:
             return {"mesage":"This student is not assigned to this lecture"}
+
+
+        current_user_id = get_jwt_identity()
+        #current_user = UserModel.query.get(current_user_id)
+        teacher_id =  lecture_student.lecture.teacher_id
+        if current_user_id != teacher_id:
+            return {"You have no permission to do that"}
 
         new_grade = Grade()
         new_grade.lecture_student = lecture_student
@@ -44,10 +61,19 @@ class GradeList(Resource):
 class GradeDetail(Resource):
     grade_schema  = GradeSchema()
 
+    @jwt_required
     def get(self,id):
         grade = Grade.query.get(id)
         if grade is None:
             return {"message":"Grade with such id doesnt exist."}
+
+        # Handling Permission
+        user_id =  grade.lecture_student.lecture.teacher.user_id
+        check_object_permission(user_id)
+
+        # wnioski - permissons na objektach lepiej zamykac w funkcje ktore raisuja error - ng generalna check_object_permission
+        # w przypadku skomplikowanej logiki moge przeniesc to przeciez do private method ktore zajmie sie pewna czescia logiki a route handler bedzie czysty
+        # decorators - wtedy kiedy permission lezy na user model np is_admin itd
 
         return {"data":self.grade_schema.dump(grade)}
 
@@ -88,3 +114,4 @@ class GradeDetail(Resource):
 #   - only certain student should be able to view his/hers own grades
 
 # Na jutro - JWT_extended and permissions
+# Na koncu password hashing - zeby to rozdielic

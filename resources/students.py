@@ -5,15 +5,24 @@ from marshmallow import ValidationError
 from flask import request
 from db import db
 from sqlalchemy import desc
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from models.user import UserModel
 
 class StudentList(Resource):
+    @jwt_required
     def get(self):
         student_schema = StudentSchema()
+        
+        # testing jwt
+        current_user_id = get_jwt_identity()
+        current_user = UserModel.query.get(current_user_id)
+
+
         students = Student.query.order_by(desc("started")).all() #works with dates
         
         data = student_schema.dump(students, many=True)
         
-        return {"data":data}
+        return {"data":data, 'user':current_user.username}
 
     def post(self):
         student_schema = StudentSchema()
